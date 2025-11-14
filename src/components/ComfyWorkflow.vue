@@ -143,4 +143,31 @@ const workflowData = ref([
     margin-top: 24px;
   }
 }
+/* 工作流模块 - 移动端优化 */
+@media (max-width: 768px) {
+  /* 工作流的图片+文字改为上下堆叠 */
+  .workflow-content {
+    flex-direction: column !important; /* 强制垂直排列 */
+  }
+
+  /* 工作流图片自适应手机宽度 */
+  .workflow-image-wrapper img {
+    width: 100% !important; /* 占满宽度 */
+    height: auto !important; /* 高度自适应 */
+    max-height: 250px; /* 限制图片高度，避免太长 */
+  }
+
+  /* 右边解说部分调整 */
+  .workflow-details {
+    padding: 0 16px !important; /* 左右留边 */
+    width: 100% !important; /* 占满宽度 */
+    margin-top: 20px !important; /* 与图片拉开距离 */
+    margin-bottom: 40px !important; /* 减少底部间距 */
+  }
+
+  /* 减少模块之间的上下间距 */
+  .workflow-item {
+    margin-bottom: 20px !important; /* 缩小模块间距 */
+  }
+}
 </style>

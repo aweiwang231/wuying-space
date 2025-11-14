@@ -41,21 +41,26 @@ const artworks = ref([
   },
   {
     id: 3,
-    title: '哥特风亚洲女孩',
+    title: '沙漠女战士',
     imageUrl: '/images/artwork-3.png',
     description:
-      '这张图旨在展现神秘性感的哥特风格人像，重点在于人物妆容、服装质感与杂乱卧室环境的氛围对比。',
-    workflowUrl: 'flux_fill_inpaint_example.json',
+      '这张图通过超写实风格展现了一位成熟女性在沙漠中的威严形象，融合军事元素，重点在于面部纹身、服装细节和专业级景深效果。',
+    workflowUrl: null,
     techParams: {
       核心工具: 'Stable Diffusion (ComfyUI)',
+      基础模型: 'divingIllustriousReal_proVAE.safetensors',
+      '风格 LoRA':
+        'Add-cfg_scale_boost (权重0.7), Add-amateur_style_v1_pony (权重1.0), MoriiMee_Gothic_Niji_Style (权重0.2)',
+      采样器: 'dpmpp_2m | 步数: 31 | CFG: 7.1 | 调度器: simple',
       核心关键词:
-        'score_9, score_8_up, asian girl, goth, emo, portrait, close-up, latex minidress, tattoos, messy bedroom, rim lighting, film grain, high contrast',
-      后期处理: '细节增强与色彩优化工作流',
+        'mature female, stern expression, barcode tattoo, black jacket, desert, 50mm lens, retro artstyle, hyper-realistic, 8k',
+      分辨率: '8K 超高清',
+      后期处理: '万物修复工作流',
     },
   },
   {
-    id: 5,
-    title: '惠惠同人作品',
+    id: 4,
+    title: '惠惠',
     imageUrl: '/images/artwork-4.png',
     description:
       '这张图生动展现了《为美好的世界献上祝福！》中惠惠的经典形象，通过动态前倾姿势，完美捕捉了角色活泼自信的性格特质。',
@@ -179,6 +184,77 @@ function openModal(artwork) {
   .modal-details-wrapper {
     padding-left: 0;
     margin-top: 24px;
+  }
+}
+/* 作品详情弹窗 - 移动端优化 */
+@media (max-width: 768px) {
+  /* 弹窗内容改为上下堆叠，避免左右挤压 */
+  :deep(.n-modal-card__content .n-flex) {
+    flex-direction: column !important; /* 强制垂直排列 */
+    align-items: center !important; /* 内容居中 */
+  }
+
+  /* 弹窗图片自适应手机宽度 */
+  .modal-image-wrapper img {
+    width: 100% !important; /* 占满弹窗宽度 */
+    height: auto !important; /* 高度自动适应，避免拉伸 */
+    max-height: 300px; /* 限制图片最大高度，防止占满屏幕 */
+  }
+
+  /* 详情文字部分调整 */
+  .modal-details-wrapper {
+    padding: 0 16px !important; /* 左右留边 */
+    width: 100% !important; /* 占满宽度 */
+    margin-top: 20px !important; /* 与图片拉开距离 */
+  }
+
+  /* 技术参数部分调整 */
+  .modal-details-wrapper .n-collapse {
+    font-size: 14px; /* 缩小文字 */
+  }
+}
+@media (max-width: 768px) {
+  /* 弹窗整体容器：增加内边距，让内容不贴边 */
+  :deep(.n-modal-card) {
+    padding: 16px !important;
+  }
+
+  /* 图片容器：放大图片并调整比例 */
+  .modal-image-wrapper {
+    width: 100% !important;
+    max-width: 300px !important; /* 限制最大宽度，避免过大 */
+    margin: 0 auto !important; /* 图片居中 */
+  }
+
+  .modal-image-wrapper img {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 4px; /* 可选：给图片加圆角，更美观 */
+  }
+
+  /* 文字详情容器：缩小间距，增加紧凑感 */
+  .modal-details-wrapper {
+    margin-top: 16px !important;
+    padding: 0 !important;
+  }
+
+  /* 技术参数折叠面板：缩小文字和间距 */
+  :deep(.n-collapse) {
+    font-size: 14px !important;
+  }
+
+  :deep(.n-collapse-panel__header) {
+    padding: 8px 0 !important;
+  }
+
+  :deep(.n-collapse-panel__content) {
+    padding: 8px 0 !important;
+    line-height: 1.5;
+  }
+
+  /* 技术参数项：调整行高和间距 */
+  :deep(.n-collapse-panel__content p) {
+    margin: 4px 0 !important;
   }
 }
 </style>

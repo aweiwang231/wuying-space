@@ -78,4 +78,15 @@ import {
   scroll-behavior: smooth;
   overflow-y: auto;
 }
+/* 导航栏 - 移动端优化 */
+@media (max-width: 768px) {
+  .nav-header {
+    padding: 10px 16px !important; /* 缩小导航栏内边距 */
+  }
+
+  .nav-links a {
+    font-size: 14px !important; /* 缩小导航文字 */
+    padding: 6px 8px !important; /* 缩小按钮间距 */
+  }
+}
 </style>

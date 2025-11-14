@@ -38,21 +38,22 @@ import {
 </template>
 
 <style scoped>
+/* 导航栏容器：保持原有样式，调整移动端布局 */
 .nav-header {
   padding: 0 32px;
-  height: 60px;
+  height: auto; /* 关键：去掉固定高度，让内容自适应 */
+  min-height: 60px; /* 最小高度保证宽屏时正常 */
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap; /* 允许 logo 和导航项换行（极端窄屏时） */
+  gap: 12px; /* 换行后 logo 和导航的间距 */
 
   position: sticky;
   top: 0;
   z-index: 1000;
-
-  /* 毛玻璃效果的背景，写死暗黑主题的颜色 */
   background-color: rgba(22, 22, 26, 0.8);
   backdrop-filter: blur(12px);
-  /* 边框颜色也写死 */
   border-bottom: 1px solid #333;
 }
 
@@ -61,14 +62,25 @@ import {
   font-weight: 600;
 }
 
+/* 关键：控制 Naive UI 的 NFlex 组件，让导航项可换行 */
+.custom-nav-links {
+  display: flex !important; /* 强制 flex 布局 */
+  flex-wrap: wrap !important; /* 允许导航项换行（核心） */
+  gap: 8px !important; /* 导航项之间的间距（缩小更紧凑） */
+  justify-content: center !important;
+}
+
+/* 导航链接样式 */
 .nav-links a {
-  /* 链接颜色写死 */
   color: #ccc;
   text-decoration: none;
-  padding: 8px 16px;
+  padding: 6px 12px; /* 调整内边距，更紧凑 */
   border-radius: 6px;
   transition: all 0.2s ease-in-out;
+  white-space: nowrap; /* 不允许文字换行（保持链接整体性） */
+  font-size: 16px;
 }
+
 .nav-links a:hover {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.1);
@@ -78,15 +90,32 @@ import {
   scroll-behavior: smooth;
   overflow-y: auto;
 }
-/* 导航栏 - 移动端优化 */
+
+/* 移动端专项优化（768px 以下） */
 @media (max-width: 768px) {
   .nav-header {
-    padding: 10px 16px !important; /* 缩小导航栏内边距 */
+    padding: 10px 16px !important; /* 左右留边，不贴屏 */
+  }
+
+  .logo {
+    font-size: 18px; /* 缩小 logo 文字 */
   }
 
   .nav-links a {
-    font-size: 14px !important; /* 缩小导航文字 */
-    padding: 6px 8px !important; /* 缩小按钮间距 */
+    font-size: 14px !important; /* 缩小链接文字 */
+    padding: 5px 10px !important; /* 进一步缩小内边距 */
+  }
+
+  /* 让导航项在移动端占满宽度，居中排列 */
+  .custom-nav-links {
+    width: 100% !important; /* 占满整行 */
+  }
+}
+
+/* 超小屏优化（576px 以下，比如旧手机） */
+@media (max-width: 576px) {
+  .nav-links a {
+    font-size: 13px !important;
   }
 }
 </style>

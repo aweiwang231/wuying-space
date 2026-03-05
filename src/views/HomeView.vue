@@ -1,42 +1,50 @@
 <script setup>
-import ComfyWorkflow from '../components/ComfyWorkflow.vue'
 import AboutMe from '../components/AboutMe.vue'
 import ImageGallery from '../components/ImageGallery.vue'
-// 1. 引入我们的新武器
-import SectionWrapper from '../components/SectionWrapper.vue'
+import ComfyWorkflow from '../components/ComfyWorkflow.vue'
+import VideoGallery from '../components/VideoGallery.vue'
 </script>
 
 <template>
-  <div class="home-container">
-    <!-- “关于我”区块 -->
-    <SectionWrapper id="about-me">
-      <!-- 我们把 AboutMe 组件放在这里，它不需要标题 -->
+  <div class="flex flex-col relative">
+    <div class="bg-noise"></div>
+
+    <section
+      id="home"
+      class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
+    >
+      <div
+        class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[80%] h-[600px] bg-gradient-to-b from-indigo-900/20 to-transparent blur-[120px] -z-10 pointer-events-none"
+      ></div>
+
       <AboutMe />
-    </SectionWrapper>
+    </section>
 
-    <!-- “图片作品”区块 -->
-    <SectionWrapper id="gallery">
-      <template #title>图片作品展示</template>
-      <ImageGallery />
-      <p class="gallery-hint">点击图片查看大图及技术参数</p>
-    </SectionWrapper>
+    <section id="gallery" class="py-24 relative">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl md:text-5xl font-bold mb-16 text-center tracking-tight">
+          精选 <span class="text-gradient-pro">视觉作品</span>
+        </h2>
+        <ImageGallery />
+      </div>
+    </section>
 
-    <!-- “ComfyUI工作流”区块 -->
-    <SectionWrapper id="workflow">
-      <template #title>ComfyUI 工作流拆解</template>
-      <!-- 使用我们刚创建的组件 -->
-      <ComfyWorkflow />
-    </SectionWrapper>
+    <section id="workflow" class="py-24 relative">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl md:text-5xl font-bold mb-16 text-center tracking-tight">
+          商业级 <span class="text-gradient-warm">工作流解决方案</span>
+        </h2>
+        <ComfyWorkflow />
+      </div>
+    </section>
 
-    <!-- “Photoshop联合”区块 (暂时放个占位符) -->
+    <section id="video" class="py-24 mb-20">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl md:text-5xl font-bold mb-16 text-center tracking-tight">
+          实机 <span class="text-gradient-pro">演示 DEMO</span>
+        </h2>
+        <VideoGallery />
+      </div>
+    </section>
   </div>
 </template>
-
-<style scoped>
-.home-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-}
-/* ... 媒体查询部分和之前一样 ... */
-</style>

@@ -1,121 +1,189 @@
 <script setup>
 import { RouterView } from 'vue-router'
-// 我们只需要这些基础组件，其他的都去掉了
-import {
-  NConfigProvider,
-  NLayout,
-  NLayoutHeader,
-  NLayoutContent,
-  NMessageProvider,
-  NFlex,
-  darkTheme,
-} from 'naive-ui'
+import { NConfigProvider, darkTheme, NDrawer, NDrawerContent } from 'naive-ui' //
+import { ref, onMounted, onUnmounted } from 'vue'
+
+// --- 状态管理 ---
+const activeSection = ref('home')
+const showMobileMenu = ref(false) // 新增：控制移动端菜单开关
+
+// --- 滚动监听逻辑 ---
+let observer = null
+
+onMounted(() => {
+  // 优化点：调整 rootMargin 使得高亮判定更符合用户视觉中心
+  const options = {
+    root: null,
+    // 意思是：视口中间 20% 的区域是"触发区"
+    // 只有当板块进入屏幕中间时，才高亮对应的导航
+    rootMargin: '-45% 0px -45% 0px',
+    threshold: 0,
+  }
+
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        activeSection.value = entry.target.id
+      }
+    })
+  }, options)
+
+  // 延迟挂载观察者
+  setTimeout(() => {
+    const sections = ['home', 'gallery', 'workflow', 'video']
+    sections.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+  }, 100)
+})
+
+onUnmounted(() => {
+  if (observer) observer.disconnect()
+})
+
+// --- 辅助函数 ---
+
+// 生成导航样式的 Class
+const navClass = (id, isMobile = false) => {
+  // 移动端的基础样式稍微大一点，方便点击
+  const base = isMobile
+    ? 'block text-xl py-4 border-b border-white/5'
+    : 'nav-item transition-all duration-300'
+
+  // 激活状态逻辑
+  const isActive = activeSection.value === id
+
+  if (isActive) {
+    return `${base} text-neon-blue font-bold ${!isMobile ? 'scale-110' : ''}`
+  } else {
+    return `${base} text-text-muted hover:text-neon-blue`
+  }
+}
+
+// 移动端点击导航后，关闭菜单
+const handleMobileClick = (id) => {
+  activeSection.value = id
+  showMobileMenu.value = false
+}
 </script>
 
 <template>
-  <!-- 这里我们直接写死 :theme="darkTheme"，永远都是暗黑模式 -->
   <n-config-provider :theme="darkTheme">
-    <n-message-provider>
-      <n-layout style="height: 100vh">
-        <!-- 顶部导航栏 -->
-        <n-layout-header class="nav-header" bordered>
-          <div class="logo">梧影的作品集</div>
-          <n-flex align="center" class="nav-links">
-            <!-- 最简单的导航链接，稳定可靠 -->
-            <a href="#about-me">关于我</a>
-            <a href="#gallery">图片作品</a>
-            <a href="#workflow">工作流</a>
-          </n-flex>
-        </n-layout-header>
+    <nav
+      class="fixed top-0 left-0 w-full h-16 flex items-center justify-between px-6 z-50 border-b border-white/10 bg-cyber-black/90 backdrop-blur-md transition-all"
+    >
+      <a
+        href="#home"
+        class="text-xl font-bold tracking-wider group cursor-pointer no-underline flex items-center gap-2"
+      >
+        <span
+          class="text-neon-blue group-hover:shadow-[0_0_10px_#00f3ff] transition-all duration-300"
+        >
+          WUYING
+        </span>
+      </a>
 
-        <!-- 主要内容区域 -->
-        <n-layout-content class="main-content">
-          <RouterView />
-        </n-layout-content>
-      </n-layout>
-    </n-message-provider>
+      <div class="hidden md:flex space-x-8">
+        <a href="#home" :class="navClass('home')">首页</a>
+        <a href="#gallery" :class="navClass('gallery')">作品画廊</a>
+        <a href="#workflow" :class="navClass('workflow')">工作流</a>
+        <a href="#video" :class="navClass('video')">实机演示</a>
+      </div>
+
+      <button
+        class="md:hidden text-white hover:text-neon-blue transition-colors focus:outline-none"
+        @click="showMobileMenu = true"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </nav>
+
+    <n-drawer v-model:show="showMobileMenu" width="280" placement="right">
+      <n-drawer-content title="菜单导航" closable>
+        <div class="flex flex-col space-y-2 mt-4">
+          <a href="#home" :class="navClass('home', true)" @click="handleMobileClick('home')"
+            >首页</a
+          >
+          <a
+            href="#gallery"
+            :class="navClass('gallery', true)"
+            @click="handleMobileClick('gallery')"
+            >作品画廊</a
+          >
+          <a
+            href="#workflow"
+            :class="navClass('workflow', true)"
+            @click="handleMobileClick('workflow')"
+            >工作流</a
+          >
+          <a href="#video" :class="navClass('video', true)" @click="handleMobileClick('video')"
+            >实机演示</a
+          >
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-white/10 text-center">
+          <p class="text-gray-500 text-xs mb-4">WUYING STUDIO</p>
+          <div class="flex justify-center gap-4">
+            <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs"
+              >WX</span
+            >
+            <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs"
+              >B</span
+            >
+          </div>
+        </div>
+      </n-drawer-content>
+    </n-drawer>
+
+    <main class="pt-16 min-h-screen">
+      <RouterView />
+    </main>
+
+    <footer class="py-8 bg-black border-t border-white/10 text-center relative z-10">
+      <p class="text-gray-500 text-sm font-mono">Wuying. Designed for AIGC & Engineering.</p>
+      <div
+        class="mt-4 flex justify-center space-x-6 opacity-50 hover:opacity-100 transition-opacity"
+      >
+        <a href="#" class="text-white hover:text-neon-blue transition-colors">电话</a>
+        <a href="#" class="text-white hover:text-neon-blue transition-colors">邮箱</a>
+        <a href="#" class="text-white hover:text-neon-blue transition-colors">联系我</a>
+      </div>
+    </footer>
   </n-config-provider>
 </template>
 
 <style scoped>
-/* 导航栏容器：保持原有样式，调整移动端布局 */
-.nav-header {
-  padding: 0 32px;
-  height: auto; /* 关键：去掉固定高度，让内容自适应 */
-  min-height: 60px; /* 最小高度保证宽屏时正常 */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap; /* 允许 logo 和导航项换行（极端窄屏时） */
-  gap: 12px; /* 换行后 logo 和导航的间距 */
-
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: rgba(22, 22, 26, 0.8);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid #333;
+.nav-item {
+  @apply text-sm font-medium uppercase tracking-wide cursor-pointer relative;
 }
 
-.logo {
-  font-size: 20px;
-  font-weight: 600;
+/* 增加一个简单的下划线动效 */
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #00f3ff; /* neon-blue */
+  transition: width 0.3s ease;
 }
 
-/* 关键：控制 Naive UI 的 NFlex 组件，让导航项可换行 */
-.custom-nav-links {
-  display: flex !important; /* 强制 flex 布局 */
-  flex-wrap: wrap !important; /* 允许导航项换行（核心） */
-  gap: 8px !important; /* 导航项之间的间距（缩小更紧凑） */
-  justify-content: center !important;
-}
-
-/* 导航链接样式 */
-.nav-links a {
-  color: #ccc;
-  text-decoration: none;
-  padding: 6px 12px; /* 调整内边距，更紧凑 */
-  border-radius: 6px;
-  transition: all 0.2s ease-in-out;
-  white-space: nowrap; /* 不允许文字换行（保持链接整体性） */
-  font-size: 16px;
-}
-
-.nav-links a:hover {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.main-content {
-  scroll-behavior: smooth;
-  overflow-y: auto;
-}
-
-/* 移动端专项优化（768px 以下） */
-@media (max-width: 768px) {
-  .nav-header {
-    padding: 10px 16px !important; /* 左右留边，不贴屏 */
-  }
-
-  .logo {
-    font-size: 18px; /* 缩小 logo 文字 */
-  }
-
-  .nav-links a {
-    font-size: 14px !important; /* 缩小链接文字 */
-    padding: 5px 10px !important; /* 进一步缩小内边距 */
-  }
-
-  /* 让导航项在移动端占满宽度，居中排列 */
-  .custom-nav-links {
-    width: 100% !important; /* 占满整行 */
-  }
-}
-
-/* 超小屏优化（576px 以下，比如旧手机） */
-@media (max-width: 576px) {
-  .nav-links a {
-    font-size: 13px !important;
-  }
+.nav-item:hover::after {
+  width: 100%;
 }
 </style>

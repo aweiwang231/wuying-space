@@ -1,0 +1,16 @@
+name: Antigravity Local Config
+version: 1.0.0
+schema: v1
+
+models:
+  - title: Antigravity Gemini Pro High
+    provider: openai
+    model: gemini-3-pro-high # Antigravity 支持的兼容名（日志里确认，如 gemini-3-pro-high 或 gemini-3-flash）
+    apiBase: http://127.0.0.1:8045/v1
+    apiKey: sk-antigravity # 固定假 key，Antigravity 不校验
+
+  - title: Antigravity Gemini Flash
+    provider: openai
+    model: gemini-3-flash
+    apiBase: http://127.0.0.1:8045/v1
+    apiKey: sk-antigravity

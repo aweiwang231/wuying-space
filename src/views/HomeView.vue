@@ -1,6 +1,7 @@
 <script setup>
 import AboutMe from '../components/AboutMe.vue'
 import ImageGallery from '../components/ImageGallery.vue'
+import ComicWorkshop from '../components/ComicWorkshop.vue' // 新增
 import ComfyWorkflow from '../components/ComfyWorkflow.vue'
 import VideoGallery from '../components/VideoGallery.vue'
 </script>
@@ -27,6 +28,11 @@ import VideoGallery from '../components/VideoGallery.vue'
         </h2>
         <ImageGallery />
       </div>
+    </section>
+
+    <!-- 插入新的漫剧创作工坊部分 -->
+    <section id="comic-workshop" class="py-24 relative bg-cyber-black/50">
+      <ComicWorkshop />
     </section>
 
     <section id="workflow" class="py-24 relative">

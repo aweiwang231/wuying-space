@@ -32,19 +32,18 @@ const avatarUrl = '/gallery/avatar.jpg'
 
         <p class="text-gray-300 leading-relaxed text-base md:text-lg max-w-3xl font-light">
           我是一名专注于完成AI图像生成到AI视频生成优化和自动化的内容创作者。
-          从静态的ComfyUI工作流到动态的配合n8n视频工作流。以及使用Runway &
-          可灵视频演绎，我致力于探索视觉叙事的边界。
+          ，我致力于探索视觉叙事的边界。
         </p>
 
         <div class="flex flex-wrap gap-3 pt-3">
-          <span class="skill-pill-highlight">n8n 视频工作流</span>
           <span class="skill-pill-highlight">ComfyUI工作流</span>
           <span class="skill-pill-highlight">Runway</span>
           <span class="skill-pill-highlight">可灵 AI</span>
           <span class="skill-pill-highlight">即梦 AI</span>
-          <span class="skill-pill-highlight">Stable Diffusion</span>
           <span class="skill-pill-highlight">Midjourney</span>
           <span class="skill-pill-highlight">Photoshop</span>
+          <span class="skill-pill-highlight">剪映</span>
+          <span class="skill-pill-highlight">漫屋</span>
         </div>
       </div>
     </div>

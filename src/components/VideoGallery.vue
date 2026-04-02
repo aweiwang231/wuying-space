@@ -4,14 +4,14 @@ import { ref } from 'vue'
 const videos = ref([
   {
     id: 1,
-    title: '原创角色 360° 环视运镜舞蹈',
+    title: '成品1',
     videoUrl: '/videos/demo1.mp4',
     posterUrl: '/videos/poster1.webp',
     isPlaying: false,
   },
   {
     id: 2,
-    title: '休闲互动漫剧小剧场',
+    title: '成品2',
     videoUrl: '/videos/demo2.mp4',
     posterUrl: '/videos/poster2.webp',
     isPlaying: false,

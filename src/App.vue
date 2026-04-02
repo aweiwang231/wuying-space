@@ -30,7 +30,7 @@ onMounted(() => {
 
   // 延迟挂载观察者
   setTimeout(() => {
-    const sections = ['home', 'gallery', 'workflow', 'video']
+    const sections = ['home', 'gallery', 'comic-workshop', 'workflow', 'video']
     sections.forEach((id) => {
       const el = document.getElementById(id)
       if (el) observer.observe(el)
@@ -84,13 +84,16 @@ const handleMobileClick = (id) => {
         </span>
       </a>
 
+      <!-- 桌面导航链接 - 这里需要添加漫剧工坊 -->
       <div class="hidden md:flex space-x-8">
         <a href="#home" :class="navClass('home')">首页</a>
         <a href="#gallery" :class="navClass('gallery')">作品画廊</a>
+        <a href="#comic-workshop" :class="navClass('comic-workshop')">漫剧工坊</a>
         <a href="#workflow" :class="navClass('workflow')">工作流</a>
         <a href="#video" :class="navClass('video')">实机演示</a>
       </div>
 
+      <!-- 移动端菜单按钮 -->
       <button
         class="md:hidden text-white hover:text-neon-blue transition-colors focus:outline-none"
         @click="showMobileMenu = true"
@@ -125,6 +128,12 @@ const handleMobileClick = (id) => {
             >作品画廊</a
           >
           <a
+            href="#comic-workshop"
+            :class="navClass('comic-workshop', true)"
+            @click="handleMobileClick('comic-workshop')"
+            >漫剧工坊</a
+          >
+          <a
             href="#workflow"
             :class="navClass('workflow', true)"
             @click="handleMobileClick('workflow')"
@@ -148,7 +157,6 @@ const handleMobileClick = (id) => {
         </div>
       </n-drawer-content>
     </n-drawer>
-
     <main class="pt-16 min-h-screen">
       <RouterView />
     </main>

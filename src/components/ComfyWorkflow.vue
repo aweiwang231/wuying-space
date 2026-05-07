@@ -85,7 +85,7 @@ const workflows = [
       { id: 'r7_b1', path: '/img/result_7_before1.png', title: '原图 1', type: 'before' },
       { id: 'r7_b2', path: '/img/result_7_before2.png', title: '原图 2', type: 'before' },
       { id: 'r7_a', path: '/img/result_7_after.png', title: '合成效果', type: 'after' },
-      { id: 'r7_a', path: '/img/result_7_after2.png', title: '合成效果', type: 'after' },
+      { id: 'r7_a2', path: '/img/result_7_after2.png', title: '合成效果', type: 'after' },
     ],
   },
 ]
@@ -108,17 +108,51 @@ const openLightbox = (image) => {
 
 <template>
   <div class="container mx-auto px-6">
-    <!-- Header -->
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-6xl font-extrabold tracking-tighter mb-6">
         商业级 <span class="text-gradient-warm">工作流解决方案</span>
       </h2>
-      <p class="text-lg text-text-muted max-w-2xl mx-auto">
+      <p class="text-text-muted text-lg max-w-3xl mx-auto font-light leading-relaxed">
         为不同创作需求精心打造的 ComfyUI 工作流程，让 AI 绘图创作更简单高效。
       </p>
     </div>
 
-    <!-- Workflow Tab Navigation -->
+    <div class="flex justify-center mb-6">
+      <div
+        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/30 text-accent-light text-sm font-medium animate-bounce shadow-[0_0_15px_rgba(212,160,74,0.15)]"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+          />
+        </svg>
+        点击下方标签，切换查看不同工作流
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+          />
+        </svg>
+      </div>
+    </div>
+
     <div class="flex flex-wrap justify-center gap-3 mb-14">
       <button
         v-for="(wf, index) in workflows"
@@ -127,7 +161,7 @@ const openLightbox = (image) => {
         :class="[
           'px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300',
           activeIndex === index
-            ? 'bg-accent text-warm-black shadow-lg shadow-accent/20'
+            ? 'bg-accent text-warm-black shadow-lg shadow-accent/20 scale-105'
             : 'bg-warm-gray border border-warm-border/40 text-text-muted hover:text-text-main hover:border-accent/40',
         ]"
       >
@@ -135,13 +169,11 @@ const openLightbox = (image) => {
       </button>
     </div>
 
-    <!-- Active Workflow Description -->
     <div class="mb-10 max-w-3xl mx-auto text-center">
       <h3 class="text-2xl font-bold mb-3 text-text-main">{{ activeWorkflow.title }}工作流</h3>
       <p class="text-text-muted">{{ activeWorkflow.description }}</p>
     </div>
 
-    <!-- Workflow Node Images - full-width grid -->
     <div class="mb-14">
       <h4 class="text-lg font-semibold mb-5 text-text-soft flex items-center gap-2">
         <span class="w-1 h-5 bg-accent rounded-full block"></span>
@@ -171,7 +203,6 @@ const openLightbox = (image) => {
       </div>
     </div>
 
-    <!-- Comparison Images - full-width grid -->
     <div class="mb-6">
       <h4 class="text-lg font-semibold mb-5 text-text-soft flex items-center gap-2">
         <span class="w-1 h-5 bg-accent rounded-full block"></span>
@@ -208,7 +239,6 @@ const openLightbox = (image) => {
     </div>
   </div>
 
-  <!-- Lightbox Modal -->
   <n-modal v-model:show="showModal">
     <div
       class="max-w-6xl w-full p-2 outline-none flex justify-center items-center bg-warm-black/85 backdrop-blur-sm rounded-lg"

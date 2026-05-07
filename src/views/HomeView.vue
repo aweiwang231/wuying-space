@@ -1,9 +1,8 @@
 <script setup>
 import AboutMe from '../components/AboutMe.vue'
 import ImageGallery from '../components/ImageGallery.vue'
-import ComicWorkshop from '../components/ComicWorkshop.vue' // 新增
 import ComfyWorkflow from '../components/ComfyWorkflow.vue'
-import VideoGallery from '../components/VideoGallery.vue'
+import ProjectCaseStudy from '../components/ProjectCaseStudy.vue'
 </script>
 
 <template>
@@ -15,9 +14,8 @@ import VideoGallery from '../components/VideoGallery.vue'
       class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
     >
       <div
-        class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[80%] h-[600px] bg-gradient-to-b from-indigo-900/20 to-transparent blur-[120px] -z-10 pointer-events-none"
+        class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[80%] h-[500px] bg-gradient-to-b from-amber-900/15 to-transparent blur-[120px] -z-10 pointer-events-none"
       ></div>
-
       <AboutMe />
     </section>
 
@@ -30,27 +28,12 @@ import VideoGallery from '../components/VideoGallery.vue'
       </div>
     </section>
 
-    <!-- 插入新的漫剧创作工坊部分 -->
-    <section id="comic-workshop" class="py-24 relative bg-cyber-black/50">
-      <ComicWorkshop />
-    </section>
-
     <section id="workflow" class="py-24 relative">
-      <div class="container mx-auto px-6">
-        <h2 class="text-3xl md:text-5xl font-bold mb-16 text-center tracking-tight">
-          商业级 <span class="text-gradient-warm">工作流解决方案</span>
-        </h2>
-        <ComfyWorkflow />
-      </div>
+      <ComfyWorkflow />
     </section>
 
-    <section id="video" class="py-24 mb-20">
-      <div class="container mx-auto px-6">
-        <h2 class="text-3xl md:text-5xl font-bold mb-16 text-center tracking-tight">
-          实机 <span class="text-gradient-pro">演示 DEMO</span>
-        </h2>
-        <VideoGallery />
-      </div>
+    <section id="project-case" class="py-24 relative bg-warm-dark/30">
+      <ProjectCaseStudy />
     </section>
   </div>
 </template>

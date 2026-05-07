@@ -25,7 +25,7 @@
   text-align: center;
   margin-bottom: 32px;
   /* 你可以给标题加个好看的渐变色 */
-  background: linear-gradient(45deg, #63e2b7, #54aeff);
+  background: linear-gradient(45deg, #e8a849, #d4915a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
